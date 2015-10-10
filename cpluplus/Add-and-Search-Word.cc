@@ -1,10 +1,7 @@
 #include <map>
-#include <vector>
 #include <string>
-
 using std::string;
 using std::map;
-using std::vector;
 
 struct Node
 {
@@ -38,19 +35,19 @@ public:
   }
 public:
 
-  // Adds a word into the data structure.
-  void addWord(string word) {
-    Node* cur = root;
-    for (size_t i = 0; i != word.size(); i++)
-    {
-      if (cur->children_.find(word[i]) == cur->children_.end())
+    // Adds a word into the data structure.
+    void addWord(string word) {
+      Node* cur = root;
+      for (int i = 0; i != word.size(); i++)
       {
-        cur->children_[word[i]] = new Node(word[i]);
+        if (cur->children_.find(word[i]) == cur->children_.end())
+        {
+          cur->children_[word[i]] = new Node(word[i]);
+        }
+        cur = cur->children_[word[i]];
       }
-      cur = cur->children_[word[i]];
+      cur->stop_ = true;
     }
-    cur->stop_ = true;
-  }
 
   bool search_aux(string& word, int i, Node* cur)
   {
@@ -72,16 +69,9 @@ public:
       return cur->children_.find(word[i]) != cur->children_.end() && search_aux(word, i+1, cur->children_[word[i]]);
     }
   }
-  // Returns if the word is in the data structure. A word could
-  // contain the dot character '.' to represent any one letter.
-  bool search(string word) {
-    return search_aux(word, 0, root);
-  }
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    bool search(string word) {
+      return search_aux(word, 0, root);
+    }
 };
-
-int main(int argc, char *argv[])
-{
-  int i = 3.1;
-  vector<int> a = {1, 2, 3};
-  return 0;
-}
