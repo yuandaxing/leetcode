@@ -24,19 +24,22 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
-/*
- *1 2 3 2*2 5 2*3 2*2*2 3*3 2*5 2*2*3 3*5 2*2*2*2 3*3*2 2*2*5
- *
- */
 class Solution
 {
 public:
-  int nthUglyNumber(int n)
+  void moveZeroes(vector<int>& nums)
   {
-
+    size_t beg = 0;
+    for (size_t i = 0; i != nums.size(); i++)
+    {
+      if (nums[i] != 0)
+      {
+        nums[beg++] = nums[i];
+      }
+    }
+    fill(nums.begin() + beg, nums.end(), 0);
   }
 };
-
 int main()
 {
 

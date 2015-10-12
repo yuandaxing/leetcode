@@ -24,14 +24,10 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
-/*
- *1 2 3 2*2 5 2*3 2*2*2 3*3 2*5 2*2*3 3*5 2*2*2*2 3*3*2 2*2*5
- *
- */
 class Solution
 {
 public:
-  int nthUglyNumber(int n)
+  vector<int> singleNumber(vector<int>& nums)
   {
 
   }

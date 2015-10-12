@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-10-10
+ * create: 2015-10-11
  * email: yuandx@mvad.com
  */
 
@@ -24,14 +24,18 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
+
 /*
- *1 2 3 2*2 5 2*3 2*2*2 3*3 2*5 2*2*3 3*5 2*2*2*2 3*3*2 2*2*5
- *
+ * M = sqrt(n)
+ * M*M  (M-1)*(M-1)
+  F(n) = min(F(n-M*M)(M) + 1, F(n)(M-1))
  */
+
+
 class Solution
 {
 public:
-  int nthUglyNumber(int n)
+  int numSquares(int n)
   {
 
   }

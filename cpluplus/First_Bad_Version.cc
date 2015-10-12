@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-10-10
+ * create: 2015-10-11
  * email: yuandx@mvad.com
  */
 
@@ -24,16 +24,28 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
-/*
- *1 2 3 2*2 5 2*3 2*2*2 3*3 2*5 2*2*3 3*5 2*2*2*2 3*3*2 2*2*5
- *
- */
+// Forward declaration of isBadVersion API.
+bool isBadVersion(int version);
+
 class Solution
 {
 public:
-  int nthUglyNumber(int n)
+  int firstBadVersion(int n)
   {
-
+    int left = 1, right = n;
+    while (left <= right)
+    {
+      int mid = left + (right - left)/ 2;
+      if (isBadVersion(mid))
+      {
+        right = mid - 1;
+      }
+      else
+      {
+        left = mid + 1;
+      }
+    }
+    return left;
   }
 };
 
