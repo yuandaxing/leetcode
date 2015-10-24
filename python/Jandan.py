@@ -18,13 +18,12 @@ while len(queue) and not old  :
         dirName = os.path.dirname(localImg)
         if not os.path.exists(dirName) : os.makedirs(dirName)
         try :
-#             if os.path.exists(localImg) :
-#                 old = True
-#                 print localImg, 'already existing'
-# #                continue
+             if os.path.exists(localImg) :
+                 old = True
+                 print localImg, 'already existing'
+                 continue
 #                 break
-
-            urllib.urlretrieve(m, localImg)
+             urllib.urlretrieve(m, localImg)
         except Exception as e:
             print e
     nextPage = re.findall(r'''<a class="previous-comment-page" href="([^"]+)"''', content)[0]
