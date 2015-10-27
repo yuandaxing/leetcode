@@ -1,2 +1,6 @@
 *.exe
 *.pyc
+GPATH
+GRTAGS
+GSYMS
+GTAGS
