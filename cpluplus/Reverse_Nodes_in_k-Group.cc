@@ -1,9 +1,3 @@
-/*
- * author: yuandx
- * create: 2015-11-22
- * email: yuandx@mvad.com
- */
-
 #include <iostream>
 #include <vector>
 #include <map>
@@ -41,41 +35,48 @@ struct ListNode {
 class Solution
 {
 public:
-  ListNode* reverse(ListNode* head)
+  void Reverse(ListNode* h, ListNode*& tail, ListNode*& head)
   {
-    ListNode* new_head = NULL;
-    while (head != NULL)
+    ListNode *newH = NULL;
+    tail = h;
+    while (h != NULL)
     {
-      ListNode* next = head->next;
-      head->next = new_head;
-      new_head = head;
-      head = next;
+      ListNode* next = h->next;
+      h->next = newH;
+      newH = h;
+      h = next;
     }
-    return new_head;
+    head = newH;
   }
 
   ListNode* reverseKGroup(ListNode* head, int k)
   {
-    ListNode tmp(0);
-    tmp.next = head; head = &tmp;
-    ListNode* prev = &tmp;
-    while (prev != NULL)
+    if (k <= 1)
     {
-      while(count < k && cur != NULL)
+      return head;
+    }
+    ListNode tmp(0);
+    tmp.next = head;
+    head = &tmp;
+    ListNode* prev = &tmp;
+    while(prev != NULL)
+    {
+      ListNode* next_prev = prev;
+      int i = 0;
+      while (next_prev != NULL && i < k)
       {
-        ListNode* next = cur->next;
-        cur->next = cur_head;
-        cur_head = cur;
-        count++;
-        cur = next;
+        i++;
+        next_prev = next_prev->next;
       }
-      ListNode* next_prev = prev->next;
-      prev->next = cur_head;
+      ListNode* next_begin = next_prev == NULL ? NULL : next_prev->next;
       if (next_prev != NULL)
       {
-        next_prev->next = cur;
+        ListNode* cur_h = prev->next, *cur_t = NULL;
+        next_prev->next = NULL;
+        Reverse(cur_h, cur_t, cur_h);
+        prev->next = cur_h, cur_t->next = next_begin;
       }
-      prev = next_prev;
+      prev = next_begin;
     }
     return head->next;
   }
