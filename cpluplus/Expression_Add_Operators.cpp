@@ -54,13 +54,45 @@ class Solution
 public:
   int V_;
 
-  void Try(vector<int>& nums, int pos, int value,
-           vector<int>& cur, vector<vector<int>> result)
+  bool IsValid(const vector<int>& nums, vector<int>& ops)
+  {
+    vector<int> result = {nums[0]};
+    vector<int> op;
+    for (size_t i = 0; i != ops.size(); i++)
+    {
+      result.push_back(nums[i+1]);
+      if (ops[i] == 2)
+      {
+        int right = result.back();
+        result.pop_back();
+        int left = result.back();
+        result.pop_back();
+        result.push_back(binary_func[2](left, right));
+      }
+      else
+      {
+        op.push_back(ops[i]);
+      }
+    }
+    if (op.empty())
+    {
+      return result.back() == V_;
+    }
+    int value = result[0];
+    for (size_t i = 0; i != op.size(); i++)
+    {
+      value = binary_func[op[i]](value, result[i+1]);
+    }
+    return value == V_;
+  }
+
+  void Try(vector<int>& nums, int pos,
+           vector<int>& cur, vector<vector<int>>& result)
   {
     int size = static_cast<int>(nums.size());
     if (size == pos)
     {
-      if (value == V_)
+      if (IsValid(nums, cur))
       {
         result.push_back(cur);
       }
@@ -69,7 +101,7 @@ public:
     for (size_t i = 0; i != binary_func.size(); i++)
     {
       cur.push_back(i);
-      Try(nums, pos+1, binary_func[i](value, nums[pos]), cur, result);
+      Try(nums, pos+1, cur, result);
       cur.pop_back();
     }
   }
@@ -108,16 +140,15 @@ public:
     Split(vec, 0, tmp, vec_splits);
     for (auto it = vec_splits.begin(); it != vec_splits.end(); ++it)
     {
-      DumpVec(*it);
       ops.clear();
-      Try(*it, 1, (*it)[0], tmp, ops);
+      Try(*it, 1, tmp, ops);
       for (auto ito = ops.begin(); ito != ops.end(); ++ito)
       {
         ostringstream os;
         os << (*it)[0];
         for (size_t i = 0; i != ito->size(); ++i)
         {
-          os << (*ito)[i];
+          os << operator_char[(*ito)[i]];
           os << (*it)[i+1];
         }
         result.push_back(os.str());
@@ -130,11 +161,10 @@ public:
 int main()
 {
   Solution s;
-  vector<string> result = s.addOperators("123", 6);
+  vector<string> result = s.addOperators("123456789", 45);
   for (auto it = result.begin(); it != result.end(); ++it)
   {
     cout << *it << endl;
   }
-
   return 0;
 }
