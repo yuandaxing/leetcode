@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-10-31
+ * create: 2016-04-23
  * email: yuandx@mvad.com
  */
 
@@ -36,34 +36,33 @@ using std::for_each;
 class Solution
 {
 public:
-  string getHint(string secret, string guess)
+  /*
+    2: 1 * 1 = 1
+    3: 1 * 2 = 2
+    4: 2 * 2 = 4
+    5: 2 * 3 = 6
+    6: 3 * 3 = 9
+    7: 2 * 2 * 3 = 3 * 4  = 12
+    8: 3 * 3 * 2 = 18
+    9: 3 * 3 * 3 = 27
+    10: 3 * 3 * 4 = 36
+    11: 4 * 4 * 3  3 * 3 * 3 * 2 = 54
+   */
+  int integerBreak(int n)
   {
-    unordered_map<char, int> B_count;
-    int A = 0, B = 0;
-    for (size_t i = 0; i != secret.size(); i++)
+    if (n < 5)
     {
-      if (secret[i] == guess[i])
-      {
-        A++;
-      }
-      else
-      {
-        B_count[secret[i]] += 1;
-      }
+      return (n / 2) * (n - n /2 );
     }
-    for (size_t i = 0; i != secret.size(); i++)
+
+    int factori = 1;
+    while (n > 4)
     {
-      if (secret[i] != guess[i] &&
-          B_count.find(guess[i]) != B_count.end()
-          && B_count[guess[i]] > 0)
-      {
-        B++;
-        B_count[guess[i]] -= 1;
-      }
+      factori *= 3;
+      n -= 3;
     }
-    ostringstream os;
-    os << A << "A" << B << "B";
-    return os.str();
+    factori *= n;
+    return factori;
   }
 };
 

@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-10-31
+ * create: 2016-04-23
  * email: yuandx@mvad.com
  */
 
@@ -33,37 +33,40 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
+set<char> vowels = {'a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U'};
 class Solution
 {
 public:
-  string getHint(string secret, string guess)
+  bool IsVowel(char c)
   {
-    unordered_map<char, int> B_count;
-    int A = 0, B = 0;
-    for (size_t i = 0; i != secret.size(); i++)
+    return vowels.find(c) != vowels.end();
+  }
+  string reverseVowels(string s)
+  {
+    if (s.empty())
     {
-      if (secret[i] == guess[i])
+      return s;
+    }
+    int left = 0, right = s.size() - 1;
+    while (left < right)
+    {
+      bool isV1 = IsVowel(s[left]), isV2 = IsVowel(s[right]);
+      if (isV1 && isV2)
       {
-        A++;
+        std::swap(s[left], s[right]);
+        left++, right--;
+        continue;
       }
-      else
+
+      if (!isV1)
       {
-        B_count[secret[i]] += 1;
+        left++;
+      }
+      if (!isV2)
+      {
+        right--;
       }
     }
-    for (size_t i = 0; i != secret.size(); i++)
-    {
-      if (secret[i] != guess[i] &&
-          B_count.find(guess[i]) != B_count.end()
-          && B_count[guess[i]] > 0)
-      {
-        B++;
-        B_count[guess[i]] -= 1;
-      }
-    }
-    ostringstream os;
-    os << A << "A" << B << "B";
-    return os.str();
   }
 };
 

@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-10-31
+ * create: 2016-04-23
  * email: yuandx@mvad.com
  */
 
@@ -36,34 +36,16 @@ using std::for_each;
 class Solution
 {
 public:
-  string getHint(string secret, string guess)
+  string reverseString(string s)
   {
-    unordered_map<char, int> B_count;
-    int A = 0, B = 0;
-    for (size_t i = 0; i != secret.size(); i++)
+    if (s.size() < 2u)
+      return s;
+    int left = 0, right = s.size() - 1;
+    for (; left < right; left++, right--)
     {
-      if (secret[i] == guess[i])
-      {
-        A++;
-      }
-      else
-      {
-        B_count[secret[i]] += 1;
-      }
+      std::swap(s[left], s[right]);
     }
-    for (size_t i = 0; i != secret.size(); i++)
-    {
-      if (secret[i] != guess[i] &&
-          B_count.find(guess[i]) != B_count.end()
-          && B_count[guess[i]] > 0)
-      {
-        B++;
-        B_count[guess[i]] -= 1;
-      }
-    }
-    ostringstream os;
-    os << A << "A" << B << "B";
-    return os.str();
+    return s;
   }
 };
 

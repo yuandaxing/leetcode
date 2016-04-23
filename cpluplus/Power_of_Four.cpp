@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-10-31
+ * create: 2016-04-23
  * email: yuandx@mvad.com
  */
 
@@ -36,34 +36,18 @@ using std::for_each;
 class Solution
 {
 public:
-  string getHint(string secret, string guess)
+  bool isPowerOfFour(int num)
   {
-    unordered_map<char, int> B_count;
-    int A = 0, B = 0;
-    for (size_t i = 0; i != secret.size(); i++)
+    while (num > 1)
     {
-      if (secret[i] == guess[i])
+      int val = num / 4;
+      if (val * 4 != num)
       {
-        A++;
+        return false;
       }
-      else
-      {
-        B_count[secret[i]] += 1;
-      }
+      num = val;
     }
-    for (size_t i = 0; i != secret.size(); i++)
-    {
-      if (secret[i] != guess[i] &&
-          B_count.find(guess[i]) != B_count.end()
-          && B_count[guess[i]] > 0)
-      {
-        B++;
-        B_count[guess[i]] -= 1;
-      }
-    }
-    ostringstream os;
-    os << A << "A" << B << "B";
-    return os.str();
+    return num == 1;
   }
 };
 
