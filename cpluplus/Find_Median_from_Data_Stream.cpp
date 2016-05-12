@@ -17,7 +17,7 @@
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
-
+#include <deque>
 using std::unordered_map;
 using std::unordered_set;
 using std::ostringstream;
@@ -33,9 +33,14 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
+/*
+ * skiplist is the best data structure for this, but we do not support
+ * index insert
+ */
 class MedianFinder {
 public:
-  vector<int> d_;
+  std::deque<int> d_;
+  //vector<int> d_;
     // Adds a number into the data structure.
   void addNum(int num)
   {
