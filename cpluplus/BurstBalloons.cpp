@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2016-05-13
+ * create: 2016-05-15
  * email: yuandx@mvad.com
  */
 
@@ -34,11 +34,11 @@ using std::sort;
 using std::string;
 using std::for_each;
 /*
- * S, B, C
- * S[i] = max{B[0...i-1] + A[i]}
- * B[i] = C[i-1] - A[i]
- * C[i] = max{S[i-1, ...0], C[i-1]}
- * max(S[size], C[size])
+ *
+ *    nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
+ *    coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+ *    greedy algorithm
+ *    find the minnumber in nums[1...size-2]
  */
 class Solution
 {

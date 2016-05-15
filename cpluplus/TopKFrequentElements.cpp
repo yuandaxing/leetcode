@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2016-05-13
+ * create: 2016-05-15
  * email: yuandx@mvad.com
  */
 
@@ -33,17 +33,28 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
-/*
- * S, B, C
- * S[i] = max{B[0...i-1] + A[i]}
- * B[i] = C[i-1] - A[i]
- * C[i] = max{S[i-1, ...0], C[i-1]}
- * max(S[size], C[size])
- */
+
 class Solution
 {
 public:
-
+  vector<int> topKFrequent(vector<int>& nums, int k)
+  {
+    unordered_map<int, int> value_freq;
+    for (auto it = nums.begin(); it != nums.end(); ++it)
+    {
+      value_freq[*it] += 1;
+    }
+    vector<std::pair<int, int>> tmp(value_freq.begin(), value_freq.end());
+    std::sort(tmp.begin(), tmp.end(), [](std::pair<int, int>& left,
+                                         std::pair<int, int>& right)
+              { return left.second > right.second;});
+    vector<int> result;
+    for (int i = 0; i < k && i < static_cast<int>(tmp.size()); i++)
+    {
+      result.push_back(tmp[i].first);
+    }
+    return result;
+  }
 };
 
 int main()

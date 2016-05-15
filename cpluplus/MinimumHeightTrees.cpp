@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2016-05-13
+ * create: 2016-05-15
  * email: yuandx@mvad.com
  */
 
@@ -34,12 +34,18 @@ using std::sort;
 using std::string;
 using std::for_each;
 /*
- * S, B, C
- * S[i] = max{B[0...i-1] + A[i]}
- * B[i] = C[i-1] - A[i]
- * C[i] = max{S[i-1, ...0], C[i-1]}
- * max(S[size], C[size])
+ * all pairs shortest path O(n3)
+ *  ballman ford algorithm
+ * for row in rows
+ * for col in cols:
+    for k in nodes:
+     if F[row, k] [k, col]
+        F[row][col] = std::min(F[row][col], F[row][k] + F[k][col])
+ *
+ *
+ *
  */
+
 class Solution
 {
 public:
