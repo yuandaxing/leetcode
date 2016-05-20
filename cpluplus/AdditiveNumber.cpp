@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2016-05-12
+ * create: 2016-05-15
  * email: yuandx@mvad.com
  */
 
@@ -33,35 +33,39 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
-/*
- * B[i] = A[0]+A[2]+...+A[i]
- * range(i, j) = B[j] - B[i-1]
- */
-class NumArray {
-
+class Solution
+{
 public:
-  NumArray(vector<int> &nums): nums_(nums)
+  bool CheckAdditive(vector<int>& vec, int i, int j)
   {
-    sums_.resize(nums_.size());
-    for (size_t i = 0; i != nums_.size(); i++)
+    int size = static_cast<int>(vec.size());
+    while (j != size)
     {
-      sums_[i] += nums[i] + (i > 0 ? sums_[i-1] : 0);
-    }
-  }
 
-  int sumRange(int i, int j)
-  {
-    int left = 0;
-    if (i > 0)
-    {
-      left = sums_[i-1];
     }
-    return sums_[j] - left;
   }
-private:
-  vector<int>& nums_, sums_;
+  bool isAdditiveNumber(string num)
+  {
+    vector<int> val;
+    int size = static_cast<int>(num.size());
+    int min_left = size / 3, max_before = size - min_left;
+    for (auto it = num.begin(); it != num.end(); ++it)
+    {
+      val.push_back(*it - '0');
+    }
+    for (int i = 1; i < max_before; i++)
+    {
+      for (int j = 1; j < max_before - i; j++)
+      {
+        if (CheckAdditive(val, i, j+i))
+        {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 };
-
 
 int main()
 {
