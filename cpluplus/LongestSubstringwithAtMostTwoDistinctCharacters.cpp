@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2016-05-12
+ * create: 2016-05-15
  * email: yuandx@mvad.com
  */
 
@@ -33,38 +33,37 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
-/*
- * B[i] = A[0]+A[2]+...+A[i]
- * range(i, j) = B[j] - B[i-1]
- */
-class NumArray {
-
+class Solution
+{
 public:
-  NumArray(vector<int> &nums): nums_(nums)
+  int lengthOfLongestSubstringTwoDistinct(string s)
   {
-    sums_.resize(nums_.size());
-    for (size_t i = 0; i != nums_.size(); i++)
+    map<char, int> v_freq;
+    int start = 0, size = static_cast<int>(s.size());
+    int length = 0;
+    for (int i = 0; i < size; i++)
     {
-      sums_[i] += nums[i] + (i > 0 ? sums_[i-1] : 0);
+      v_freq[s[i]] += 1;
+      while (v_freq.size() > 2u)
+      {
+        v_freq[s[start]] -= 1;
+        if (v_freq[s[start]] == 0)
+        {
+          v_freq.erase(s[start]);
+        }
+        start++;
+      }
+      length = std::max(i - start + 1, length);
     }
+    return length;
   }
-
-  int sumRange(int i, int j)
-  {
-    int left = 0;
-    if (i > 0)
-    {
-      left = sums_[i-1];
-    }
-    return sums_[j] - left;
-  }
-private:
-  vector<int>& nums_, sums_;
 };
-
 
 int main()
 {
+  string v1 = "eceba";
+  Solution s;
+  cout << s.lengthOfLongestSubstringTwoDistinct(v1) << endl;
 
   return 0;
 }

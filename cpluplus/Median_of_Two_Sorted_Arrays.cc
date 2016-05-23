@@ -70,7 +70,7 @@ public:
   double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
   {
     int size = static_cast<int>(nums1.size() + nums2.size());
-    if (size & 1 == 1)
+    if ((size & 1) == 1)
     {
       int v, K = size / 2 + 1;
       FindKInV1(nums1, nums2, K, v) || FindKInV1(nums2, nums1, K, v);
