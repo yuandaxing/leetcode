@@ -17,7 +17,6 @@ class Solution:
 				direc = not direc
 			init = cur
 		return init
-
 sol = Solution()
 print sol.grayCode(3)
 print sol
