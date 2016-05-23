@@ -97,27 +97,66 @@ uint32_t murmur3_32(const char *key, uint32_t len, uint32_t seed)
 
   return hash;
 }
-size_t Hasher(const IdxVal& iv)
+struct Hasher
 {
-  return murmur3_32(reinterpret_cast<const char*>(&iv), sizeof(iv), 0);
-}
-bool Equal(const IdxVal& i1, const IdxVal& i2)
+  size_t operator()(const IdxVal& iv) const
+  {
+    return murmur3_32(reinterpret_cast<const char*>(&iv), sizeof(iv), 0);
+
+  }
+};
+struct Equal
 {
-  return i1.idx_ == i2.idx_ && i1.val_ == i2.val_;
-}
+  bool operator()(const IdxVal& i1, const IdxVal& i2) const
+  {
+    return i1.idx_ == i2.idx_ && i1.val_ == i2.val_;
+  }
+};
 class Solution
 {
 public:
-  std::unordered_set<IdxVal> memo(100);
+  std::unordered_set<IdxVal, Hasher, Equal> memo;
+  void UniqPerm(vector<int>&nums, size_t start, vector<vector<int>>& result)
+  {
+    if (start >= nums.size())
+    {
+      result.push_back(nums);
+      return ;
+    }
+    for (size_t i = start; i != nums.size(); i++)
+    {
+      IdxVal iv(start, nums[i]);
+      if (memo.find(iv) == memo.end())
+      {
+        std::swap(nums[start], nums[i]);
+        memo.insert(iv);
+        UniqPerm(nums, start+1, result);
+        std::swap(nums[start], nums[i]);
+      }
+    }
+  }
+
   vector<vector<int>> permuteUnique(vector<int>& nums)
   {
     vector<vector<int>> result;
+    UniqPerm(nums, 0, result);
     return result;
   }
 };
 
 int main()
 {
+  Solution s;
+  vector<int> v = {1,1,2};
+  vector<vector<int>> result = s.permuteUnique(v);
+  for (auto it = result.begin(); it != result.end(); ++it)
+  {
+    for (auto it2 = it->begin(); it2 != it->end(); ++it2)
+    {
+      cout << *it2 << " ";
+    }
+    cout << endl;
+  }
 
   return 0;
 }
