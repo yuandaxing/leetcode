@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-11-17
+ * create: 2016-05-23
  * email: yuandx@mvad.com
  */
 
@@ -36,30 +36,31 @@ using std::for_each;
 class Solution
 {
 public:
-  vector<string> letterCombinations(string digits)
+  vector<vector<int>> subsetsWithDup(vector<int>& nums)
   {
-    const string num_2_str[] = {" ", "", "abc", "def", "ghi", "jkl",
-                                "mno", "pqrs", "tuv", "wxyz"};
-    vector<string> result = {""};
-    for (size_t i = 0; i != digits.size(); i++)
+    vector<vector<int>> result, tmp;
+    result.push_back(vector<int>());
+    map<int, int> v_freq;
+    for (auto it = nums.begin(); it != nums.end(); ++it)
     {
-      vector<string> tmp;
-      for (vector<string>::iterator it = result.begin(); it != result.end(); it++)
-      {
-        const string& cur = num_2_str[digits[i]-'0'];
-        for (size_t j = 0; j != cur.size(); j++)
-        {
-          string tmp_str(*it);
-          tmp_str.push_back(cur[j]);
-          tmp.push_back(tmp_str);
-        }
+      v_freq[*it] += 1;
+    }
 
+    for (auto it = v_freq.begin(); it != v_freq.end(); ++it)
+    {
+      vector<int> v_k;
+      for (int i = 0; i <= it->second; ++i)
+      {
+        for (auto it1 = result.begin(); it1 != result.end(); ++it1)
+        {
+          vector<int> cur(*it1);
+          cur.insert(cur.end(), v_k.begin(), v_k.end());
+          tmp.push_back(cur);
+        }
+        v_k.push_back(it->first);
       }
       tmp.swap(result);
-    }
-    if (digits.empty())
-    {
-      result.clear();
+      tmp.clear();
     }
     return result;
   }

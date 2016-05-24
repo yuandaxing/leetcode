@@ -134,6 +134,11 @@ public:
         std::swap(nums[start], nums[i]);
       }
     }
+    for (size_t i = start; i != nums.size(); i++)
+    {
+      IdxVal iv(start, nums[i]);
+      memo.erase(iv);
+    }
   }
 
   vector<vector<int>> permuteUnique(vector<int>& nums)

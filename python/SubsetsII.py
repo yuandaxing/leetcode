@@ -9,7 +9,7 @@ class Solution:
         result =  list(d.items())
         result.sort(key = lambda e: e[0])
         return result 
-     def subset(self, eCount, i) :
+    def subset(self, eCount, i) :
         if i >= len(eCount) :
             return [[]]
         result = []

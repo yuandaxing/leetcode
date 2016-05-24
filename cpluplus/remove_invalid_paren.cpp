@@ -1,6 +1,6 @@
 /*
  * author: yuandx
- * create: 2015-11-17
+ * create: 2016-05-24
  * email: yuandx@mvad.com
  */
 
@@ -33,35 +33,41 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
+/*
+ * algorithm
+ * stack to calculate remove N '(', M ')'
+ * C(m, M)C(n, N)
+ *
+ */
 class Solution
 {
 public:
-  vector<string> letterCombinations(string digits)
+  void DFS(string& str, int start, int delete_left, int delete_right);
+  vector<string> removeInvalidParentheses(string s)
   {
-    const string num_2_str[] = {" ", "", "abc", "def", "ghi", "jkl",
-                                "mno", "pqrs", "tuv", "wxyz"};
-    vector<string> result = {""};
-    for (size_t i = 0; i != digits.size(); i++)
+    vector<char> stack;
+    int delete_left = 0, delete_right = 0;
+    for (auto it = s.begin(); it != s.end(); ++it)
     {
-      vector<string> tmp;
-      for (vector<string>::iterator it = result.begin(); it != result.end(); it++)
+      if (*it == '(')
       {
-        const string& cur = num_2_str[digits[i]-'0'];
-        for (size_t j = 0; j != cur.size(); j++)
-        {
-          string tmp_str(*it);
-          tmp_str.push_back(cur[j]);
-          tmp.push_back(tmp_str);
-        }
-
+        stack.push_back(*it);
       }
-      tmp.swap(result);
+      if (*it == ')')
+      {
+        if (stack.empty())
+        {
+          delete_right++;
+        }
+        else
+        {
+          stack.pop_back();
+        }
+      }
     }
-    if (digits.empty())
-    {
-      result.clear();
-    }
-    return result;
+    delete_left = static_cast<int>(stack.size());
+
+
   }
 };
 
