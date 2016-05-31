@@ -36,13 +36,54 @@ using std::for_each;
 class Solution
 {
 public:
+  bool isValidNum(vector<int>& v)
+  {
+    return v[0] != 0;
+  }
+  vector<int> Add(vector<int>& v1, vector<int>& v2)
+  {
+    std::reverse(v1.begin(), v1.end());
+    std::reverse(v1.begin(), v1.end());
+    vector<int> result;
+    int c = 0;
+    size_t size = std::max(v1.size(), v2.size());
+    for (size_t i = 0; i < size || c != 0; i++)
+    {
+      int a1 = i < v1.size() ? v1[i] : 0;
+      int a2 = i < v2.size() ? v2[i] : 0;
+      int cur = a1+a2+c;
+      c = cur / 10;
+      cur = cur % 10;
+      result.push_back(cur);
+    }
+    std::reverse(result.begin(), result.end());
+    return result;
+  }
+  bool compare(vector<int>& result, vector<int>& vec, int beg)
+  {
+    int size2 = vec.size(), size1 = result.size();
+    if (size2 - beg < size1)
+      return false;
+    std::equal(result.begin(), result.end(), vec.begin() + beg);
+  }
   bool CheckAdditive(vector<int>& vec, int i, int j)
   {
     int size = static_cast<int>(vec.size());
+    int prev = 0;
     while (j != size)
     {
-
+      vector<int> n1(vec.begin() + prev, vec.begin() + i),
+        n2(vec.begin()+i, vec.begin() + j);
+      if (!isValidNum(n1) || !isValidNum(n2))
+        return false;
+      vector<int> n3 = Add(n1, n2);
+      if (!compare(n3, vec, j))
+        return false;
+      prev = i;
+      i = j;
+      j = j + n3.size();
     }
+    return true;
   }
   bool isAdditiveNumber(string num)
   {
