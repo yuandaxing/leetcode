@@ -38,12 +38,12 @@ class Solution
 public:
   bool isValidNum(vector<int>& v)
   {
-    return v[0] != 0;
+    return v[0] != 0 || (v.size() == 1u && v[0] == 0);
   }
   vector<int> Add(vector<int>& v1, vector<int>& v2)
   {
     std::reverse(v1.begin(), v1.end());
-    std::reverse(v1.begin(), v1.end());
+    std::reverse(v2.begin(), v2.end());
     vector<int> result;
     int c = 0;
     size_t size = std::max(v1.size(), v2.size());
@@ -59,18 +59,19 @@ public:
     std::reverse(result.begin(), result.end());
     return result;
   }
+
   bool compare(vector<int>& result, vector<int>& vec, int beg)
   {
     int size2 = vec.size(), size1 = result.size();
     if (size2 - beg < size1)
       return false;
-    std::equal(result.begin(), result.end(), vec.begin() + beg);
+    return std::equal(result.begin(), result.end(), vec.begin() + beg);
   }
   bool CheckAdditive(vector<int>& vec, int i, int j)
   {
     int size = static_cast<int>(vec.size());
     int prev = 0;
-    while (j != size)
+    do
     {
       vector<int> n1(vec.begin() + prev, vec.begin() + i),
         n2(vec.begin()+i, vec.begin() + j);
@@ -82,7 +83,7 @@ public:
       prev = i;
       i = j;
       j = j + n3.size();
-    }
+    } while (j < size);
     return true;
   }
   bool isAdditiveNumber(string num)
@@ -94,9 +95,9 @@ public:
     {
       val.push_back(*it - '0');
     }
-    for (int i = 1; i < max_before; i++)
+    for (int i = 1; i <= max_before; i++)
     {
-      for (int j = 1; j < max_before - i; j++)
+      for (int j = 1; j <= max_before - i && i + j < size; j++)
       {
         if (CheckAdditive(val, i, j+i))
         {
@@ -110,6 +111,8 @@ public:
 
 int main()
 {
-
+  string v = "101";
+  Solution s;
+  cout << s.isAdditiveNumber(v) << endl;
   return 0;
 }

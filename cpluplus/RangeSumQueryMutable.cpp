@@ -37,14 +37,46 @@ using std::for_each;
  * update i, value, i should i update all the sum after i
  *
  */
-class Solution
-{
+class NumArray {
 public:
+  vector<int> nums_;
+  vector<int> sums_;
+  void UpdateRange(int start)
+  {
+    int size = static_cast<int>(sums_.size());
+    for (; start < size; start++)
+    {
+      int prev = start > 0 ? sums_[start-1]: 0;
+      sums_[start] = nums_[start] + prev;
+    }
+  }
 
+  NumArray(vector<int> &nums):
+    nums_(nums)
+  {
+    sums_.resize(nums.size(), 0);
+    UpdateRange(0);
+  }
+
+  void update(int i, int val)
+  {
+    nums_[i] = val;
+    UpdateRange(i);
+  }
+
+  int sumRange(int i, int j)
+  {
+    int prev = i > 0 ? sums_[i-1] : 0;
+    return sums_[j] - prev;
+  }
 };
 
 int main()
 {
-
+  vector<int> v = {1, 3, 5};
+  NumArray ar(v);
+  cout << ar.sumRange(0, 2) << endl;
+  ar.update(1, 2);
+  cout << ar.sumRange(0, 2) << endl;
   return 0;
 }
