@@ -57,6 +57,10 @@ public:
       all_path[it->first][it->second] = 1;
       all_path[it->second][it->first] = 1;
     }
+    for (int i = 0; i < n; i++)
+    {
+      all_path[i][i] = 0;
+    }
     for (int k = 0; k < n; k++)
     {
       for (int i = 0; i < n; i++)
@@ -95,10 +99,13 @@ public:
 
 int main()
 {
-  int n = 6;
-  vector<pair<int, int>> edges= {{0, 3}, {1, 3}, {2, 3}, {4, 3}, {5, 4}};
+  int n = 4;
+  vector<pair<int, int>> edges= {{1, 0}, {1, 2}, {1, 3}};
+  int n2 = 6;
+  vector<pair<int, int>> edges2= {{0, 3}, {1, 3}, {2, 3}, {4, 3}, {5, 4}};
+
   Solution sol;
-  vector<int> result = sol.findMinHeightTrees(n, edges);
+  vector<int> result = sol.findMinHeightTrees(n2, edges2);
   for (auto it = result.begin(); it != result.end(); ++it)
   {
     cout << *it << endl;
