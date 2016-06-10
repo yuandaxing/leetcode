@@ -89,5 +89,7 @@ int main()
   };
   Solution sol;
   cout << sol.longestIncreasingPath(v) << endl;
+  string i;
+  i.push_back('c');
   return 0;
 }
