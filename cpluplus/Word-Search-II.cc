@@ -7,17 +7,20 @@ using std::string;
  * Trie tree search
  * depth first
  */
-class Solution {
+class Solution
+{
   vector<string> results;
   int x_dim, y_dim;
 
-  struct TrieNode {
+  struct TrieNode
+  {
     TrieNode* exits[26];
     bool      is_end;
   };
 
-  void recurse( vector<vector<char>>& board, string& s, int x, int y, TrieNode* trie_curr ) {
-    if ( unsigned(x) >= x_dim || unsigned(y) >= y_dim )
+  void recurse( vector<vector<char>>& board, string& s, int x, int y, TrieNode* trie_curr )
+  {
+    if ( x >= x_dim || y >= y_dim )
       return;
 
     const auto c = board[y][x];
@@ -47,7 +50,8 @@ class Solution {
   }
 
 public:
-  vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+  vector<string> findWords(vector<vector<char>>& board, vector<string>& words)
+  {
     if ( !words.size() || !board.size() || !board[0].size() )
       return results;
 
@@ -60,7 +64,8 @@ public:
 
     TrieNode* trie_root = &trie_pool[ num_trie_nodes++ ];
 
-    for ( const auto& word : words ) {
+    for ( const auto& word : words )
+    {
       TrieNode* trie_curr = trie_root;
       for ( const auto c : word ) {
         auto& trie_next = trie_curr->exits[ c-'a' ];
@@ -72,10 +77,8 @@ public:
       }
       trie_curr->is_end = true;
     }
-
     x_dim = board[0].size();
     y_dim = board.size();
-
     string s;
     for ( auto y = 0 ; y < y_dim ; ++y )
       for ( auto x = 0; x < x_dim; ++x )
