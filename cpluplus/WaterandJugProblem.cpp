@@ -53,11 +53,23 @@ struct Compare
     return s1.s2 - s2.s2 < 0;
   }
 };
+auto C1 = [](const State& s1, const State& s2)
+{
+  if(s1.s1 != s2.s1)
+  {
+    return s1.s1 - s2.s1 < 0;
+  }
+  return s1.s2 - s2.s2 < 0;
+};
 class Solution
 {
 public:
+  Solution():
+    s1(C1)
+  {}
   int x_, y_;
   set<State, Compare> ss_;
+  set<State, decltype(C1)> s1;
   std::deque<State> queue_;
   void Insert(const State& s)
   {
