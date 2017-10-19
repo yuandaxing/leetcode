@@ -26,20 +26,16 @@ using std::string;
 class Solution
 {
 public:
-  int addDigits(int num)
-  {
-    while (num >= 10)
+    int addDigits(int num)
     {
-      int cur = 0;
-      while (num != 0)
-      {
-        cur += num % 10;
-        num /= 10;
-      }
-      num = cur;
+        int cur = 0;
+        while (num != 0)
+        {
+            cur += num % 10;
+            num /= 10;
+        }
+        return cur;
     }
-    return num;
-  }
 };
 int main()
 {

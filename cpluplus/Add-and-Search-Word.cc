@@ -1,5 +1,6 @@
 #include <map>
 #include <string>
+#include <algorithm>
 using std::string;
 using std::map;
 
@@ -57,12 +58,11 @@ public:
     }
     if (word[i] == '.')
     {
-      bool ret = false;
-      for (map<char, Node*>::iterator it = cur->children_.begin(); !ret && it != cur->children_.end(); ++it)
-      {
-        ret = search_aux(word, i+1, it->second);
-      }
-      return ret;
+        auto it = find_if(cur->children_.begin(), cur->children_.end(),
+                          [i, this, &word](map<char, Node*>::value_type& v){
+              return search_aux(word, i+1, v.second);
+                          });
+      return it != cur->children_.end();
     }
     else
     {
