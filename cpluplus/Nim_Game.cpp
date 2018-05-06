@@ -3,7 +3,8 @@
  * create: 2015-10-16
  * email: yuandx@mvad.com
  */
-
+/*
+ */
 #include <iostream>
 #include <vector>
 #include <map>
@@ -28,6 +29,14 @@ using std::pair;
 using std::sort;
 using std::string;
 using std::for_each;
+/*
+  F[1] = F[2] = F[3]
+  F[4] = false
+  F[5] = F[6] = F[7]
+  F[8] = false
+  F[9] = F[10] = f[11]
+
+ */
 
 class Solution
 {
